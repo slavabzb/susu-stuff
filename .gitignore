@@ -1,0 +1,7 @@
+*.aux
+*.log
+*.out
+*.backup
+*.toc
+*.ipynb_checkpoints
+
