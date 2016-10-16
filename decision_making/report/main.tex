@@ -12,9 +12,11 @@
     
 \documentclass[14pt]{diploma}
 
-    
     \usepackage[russian]{babel}
     \usepackage[T1]{fontenc}
+    \usepackage{pscyr}
+    \usepackage{setspace}
+    \usepackage{tabularx}
     % Nicer default font than Computer Modern for most use cases
     \usepackage{palatino}
 
@@ -268,8 +270,11 @@
     
 
     \begin{document}
-        
+       
+    \input{title}
+       
     \tableofcontents
+    \newpage
 
     
     \section{Задания для самостоятельной
@@ -752,6 +757,129 @@ $\mathbf{\overline{W}}$ главного собственного вектора} с точностью до 9
     Таким образом, получили \textbf{абсолютно согласованную} матрицу, не
 изменяя последнюю строку.
 
+    \subsection{Задание 3}\label{ux437ux430ux434ux430ux43dux438ux435-3}
+
+    \subsubsection{Постановка
+задачи}\label{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438}
+
+    Найдите агрегированную оценку двух экспертов, если матрица парных
+сравнений первого эксперта имеет вид, представленный в задании 1, а
+матрица парных сравнений второго имеет вид: \[
+A=\left(\begin{array}{cccc}
+1 & 3 & 6 & 8 \\
+1/3 & 1 & 4 & 5 \\
+1/6 & 1/4 & 1 & 3 \\
+1/8 & 1/5 & 1/3 & 1
+\end{array}\right).
+\]
+
+    \subsubsection{Ход
+решения}\label{ux445ux43eux434-ux440ux435ux448ux435ux43dux438ux44f}
+
+    Для объединения оценок суждений двух экспертов строится матрица с
+средним геометрическим оценок. В данной задаче будем считать, что
+суждения двух экспертов обладают одинаковой степенью значимости. Введем
+оценки первого ($A_1$) и второго ($A_2$) экспертов.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{n}{A1} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{4} \PY{l+m+mi}{6} \PY{l+m+mi}{8}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{8} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}1}]:} 4?4 Array\{Float64,2\}:
+         1.0       4.0       6.0       8.0
+         0.25      1.0       3.0       2.0
+         0.166667  0.333333  1.0       3.0
+         0.125     0.5       0.333333  1.0
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{A2} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{6} \PY{l+m+mi}{8}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{4} \PY{l+m+mi}{5}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{8} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{5} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} 4?4 Array\{Float64,2\}:
+         1.0       3.0   6.0       8.0
+         0.333333  1.0   4.0       5.0
+         0.166667  0.25  1.0       3.0
+         0.125     0.2   0.333333  1.0
+\end{Verbatim}
+        
+    Построим результирующую матрицу $A$ со средним геометрическим оценок.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{using} \PY{n}{Stats}
+        \PY{n}{A} \PY{o}{=} \PY{n}{map}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{o}{\PYZhy{}\PYZgt{}} \PY{n}{geomean}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{A1}\PY{p}{,} \PY{n}{A2}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} 4?4 Array\{Float64,2\}:
+         1.0       3.4641    6.0       8.0    
+         0.288675  1.0       3.4641    3.16228
+         0.166667  0.288675  1.0       3.0    
+         0.125     0.316228  0.333333  1.0    
+\end{Verbatim}
+        
+    Таким образом, получили агрегированную оценку двух экспертов при
+условии, что суждения экспертов обладают одинаковой степенью значимости.
+
+    \subsection{Задание 4}\label{ux437ux430ux434ux430ux43dux438ux435-4}
+
+    \subsubsection{Постановка
+задачи}\label{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438}
+
+    Найти агрегированную оценку экспертов из задания 3, при условии, что
+квалификация первого эксперта имеет вес 3 (первый эксперт более
+квалифицированный), а второго - 1.
+
+    \subsubsection{Ход
+решения}\label{ux445ux43eux434-ux440ux435ux448ux435ux43dux438ux44f}
+
+    Расчет агрегированной оценки в случае привлечения $n$ экспертов, имеющих
+различную значимость $\alpha_k$, $k=\overline{1,n}$, осуществляется по
+формуле: \[
+\alpha_{ij}^{агр}=\sqrt[n]{\prod_{k=1}^na_{ij}^{\alpha_k}}, \sum_{k=1}^n\alpha_k=1.
+\]
+
+    Введем в рассмотрение веса $w^s$ (квалификацию) экспертов.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{ws} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} 1?2 Array\{Int32,2\}:
+         3  1
+\end{Verbatim}
+        
+    Рассчитаем значимость суждения каждого эксперта таким образом, чтобы
+общая значимость была равна 1.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{n}{w} \PY{o}{/} \PY{n}{sum}\PY{p}{(}\PY{n}{ws}\PY{p}{)} \PY{k}{for} \PY{n}{w} \PY{k}{in} \PY{n}{ws}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} 1?2 Array\{Float64,2\}:
+         0.75  0.25
+\end{Verbatim}
+        
+    Рассчитаем результирующую матрицу.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{A} \PY{o}{=} \PY{n}{map}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{o}{\PYZhy{}\PYZgt{}} \PY{n}{geomean}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{o}{\PYZca{}}\PY{n}{a}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{\PYZca{}}\PY{n}{a}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{A1}\PY{p}{,} \PY{n}{A2}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} 4?4 Array\{Float64,2\}:
+         1.0       1.92936   2.44949  2.82843
+         0.518307  1.0       1.79547  1.58583
+         0.408248  0.556957  1.0      1.73205
+         0.353553  0.630583  0.57735  1.0    
+\end{Verbatim}
+        
+    Таким образом, получили агрегированную оценку двух экспертов при
+условии, что суждения экспертов обладают разной степенью значимости.
 
     % Add a bibliography block to the postdoc
     
