@@ -881,8 +881,308 @@ A=\left(\begin{array}{cccc}
     Таким образом, получили агрегированную оценку двух экспертов при
 условии, что суждения экспертов обладают разной степенью значимости.
 
+\subsection{Задание 5}\label{ux437ux430ux434ux430ux43dux438ux435-5}
+
+    \subsubsection{Постановка
+задачи}\label{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438}
+
+    Для иерархической структуры, представленной на рисунке, определите
+приоритет провайдера, выполнив иерархический синтез.
+
+Матрица сравнения критериев относительно цели имеет вид: \[
+A=\left(\begin{array}{ccccc}
+1 & 4 & 6 & 2 & 7 \\
+1/4 & 1 & 3 & 4 & 2 \\
+1/6 & 1/3 & 1 & 2 & 1 \\
+1/2 & 1/4 & 1/2 & 1 & 1/3 \\
+1/7 & 1/2 & 1 & 3 & 1
+\end{array}\right).
+\]
+
+    Матрицы сравнения альтернатив относительно критериев считаются
+заданными.
+
+    \subsubsection{Ход
+решения}\label{ux445ux43eux434-ux440ux435ux448ux435ux43dux438ux44f}
+
+    Иерархический синтез используется для общего ранжирования альтернатив
+относительно цели, т.е. для подсчета количественной оценки качества
+альтернатив. Действовать будем согласно алгоритму.
+
+    \textbf{Шаг 1.} Для каждого элемента иерархии построить матрицы парных
+сравнений элементов иерархии следующего уровня. На первом уровне
+иерархии будем использовать матрицу сравнения относительно
+удовлетворения провайдером {[}УП{]}.
+
+    \[
+[\mbox{УП}] = \left(\begin{array}{ccccccc}
+ & & \mbox{\underline{Т}} & \mbox{\underline{С}} & \mbox{\underline{Д}} & \mbox{\underline{О}} & \mbox{\underline{У}} \\
+\mbox{Т} & | & 1 & 4 & 6 & 2 & 7 \\
+\mbox{С} & | & 1/4 & 1 & 3 & 4 & 2 \\
+\mbox{Д} & | & 1/6 & 1/3 & 1 & 2 & 1 \\
+\mbox{О} & | & 1/2 & 1/4 & 1/2 & 1 & 1/3 \\
+\mbox{У} & | & 1/7 & 1/2 & 1 & 3 & 1 
+\end{array}\right).
+\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{n}{A} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{4} \PY{l+m+mi}{6} \PY{l+m+mi}{2} \PY{l+m+mi}{7}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{4} \PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{7} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}1}]:} 5?5 Array\{Float64,2\}:
+         1.0       4.0       6.0  2.0  7.0     
+         0.25      1.0       3.0  4.0  2.0     
+         0.166667  0.333333  1.0  2.0  1.0     
+         0.5       0.25      0.5  1.0  0.333333
+         0.142857  0.5       1.0  3.0  1.0     
+\end{Verbatim}
+        
+    Введем функцию вычисления приближенных значений максимального
+собственного числа и главного собственного вектора.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{function}\PY{n+nf}{ }\PY{n+nf}{eigvalvecapprox}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+            \PY{n+nb}{eps} \PY{o}{=} \PY{l+m+mf}{1e\PYZhy{}9}
+            \PY{n}{e} \PY{o}{=} \PY{n}{ones}\PY{p}{(}\PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+            \PY{n}{num} \PY{o}{=} \PY{n}{A} \PY{o}{*} \PY{n}{e}
+            \PY{n}{denom} \PY{o}{=} \PY{n}{e}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{num}
+            \PY{n}{prev} \PY{o}{=} \PY{n}{num} \PY{o}{/} \PY{n}{denom}
+            \PY{n}{num} \PY{o}{=} \PY{n}{A} \PY{o}{*} \PY{n}{num}
+            \PY{n}{denom} \PY{o}{=} \PY{n}{e}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{num}
+            \PY{n}{next} \PY{o}{=} \PY{n}{num} \PY{o}{/} \PY{n}{denom}
+            \PY{k}{while} \PY{n}{true}
+                \PY{n}{prev} \PY{o}{=} \PY{n}{next}
+                \PY{n}{num} \PY{o}{=} \PY{n}{A} \PY{o}{*} \PY{n}{num}
+                \PY{n}{denom} \PY{o}{=} \PY{n}{e}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{num}
+                \PY{n}{next} \PY{o}{=} \PY{n}{num} \PY{o}{/} \PY{n}{denom}
+                \PY{n}{result} \PY{o}{=} \PY{n}{abs}\PY{p}{(}\PY{n}{next} \PY{o}{\PYZhy{}} \PY{n}{prev}\PY{p}{)} \PY{o}{.}\PY{o}{\PYZgt{}} \PY{n+nb}{eps}
+                \PY{n}{done} \PY{o}{=} \PY{n}{true}
+                \PY{k}{for} \PY{n}{r} \PY{k}{in} \PY{n}{result}
+                    \PY{k}{if} \PY{o}{!}\PY{n}{r}
+                        \PY{n}{done} \PY{o}{=} \PY{n}{false}
+                        \PY{k}{break}
+                    \PY{k}{end}
+                \PY{k}{end}
+                \PY{k}{if} \PY{n}{done}
+                    \PY{k}{break}
+                \PY{k}{end}
+            \PY{k}{end}
+            \PY{n}{Wa} \PY{o}{=} \PY{n}{next}
+            \PY{n}{lmax} \PY{o}{=} \PY{p}{(}\PY{n}{e}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{A} \PY{o}{*} \PY{n}{Wa}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{e}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{Wa}\PY{p}{)}
+            \PY{k}{return} \PY{n}{lmax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{Wa}
+        \PY{k}{end}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} eigvalvecapprox (generic function with 1 method)
+\end{Verbatim}
+        
+    Вычислим приближенные значения максимального собственного числа и
+главного собственного вектора для матрицы $A$.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{val}\PY{p}{,} \PY{n}{vec} \PY{o}{=} \PY{n}{eigvalvecapprox}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} (5.643273525681777,
+        [0.505324; 0.205149; … ; 0.0867938; 0.110393])
+\end{Verbatim}
+        
+    Введем функцию для вычисления индекса однородности (индекса
+согласованности) \[
+I_S=\frac{\lambda_{max}-n}{n-1}.
+\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{function}\PY{n+nf}{ }\PY{n+nf}{ids}\PY{p}{(}\PY{n}{lmax}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+            \PY{k}{return} \PY{p}{(}\PY{n}{lmax} \PY{o}{\PYZhy{}} \PY{n}{n}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{k}{end}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} ids (generic function with 1 method)
+\end{Verbatim}
+        
+    Вычислим индекс однородности для матрицы $A$.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{Is} \PY{o}{=} \PY{n}{ids}\PY{p}{(}\PY{n}{val}\PY{p}{,} \PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} 0.16081838142044425
+\end{Verbatim}
+        
+    Также, потребуется функция для вычисления отношения однородности
+(отношения согласованности) \[
+R_S=\frac{I_S}{\hat{I_S}}.
+\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{function}\PY{n+nf}{ }\PY{n+nf}{rs}\PY{p}{(}\PY{n}{idx}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+            \PY{n}{mean} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{k}{if} \PY{n}{n} \PY{o}{==} \PY{l+m+mi}{3}
+                \PY{n}{mean} \PY{o}{=} \PY{l+m+mf}{0.58}
+            \PY{k}{elseif} \PY{n}{n} \PY{o}{==} \PY{l+m+mi}{4}
+                \PY{n}{mean} \PY{o}{=} \PY{l+m+mf}{0.9}
+            \PY{k}{elseif} \PY{n}{n} \PY{o}{==} \PY{l+m+mi}{5}
+                \PY{n}{mean} \PY{o}{=} \PY{l+m+mf}{1.12}
+            \PY{k}{end}
+            \PY{k}{return} \PY{n}{idx} \PY{o}{/} \PY{n}{mean}
+        \PY{k}{end}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} rs (generic function with 1 method)
+\end{Verbatim}
+        
+    Вычислим отношение однородности для матрицы $A$.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{Rs} \PY{o}{=} \PY{n}{rs}\PY{p}{(}\PY{n}{Is}\PY{p}{,} \PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} 0.14358784055396806
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{As} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{push!}\PY{p}{(}\PY{n}{As}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{4} \PY{l+m+mi}{6} \PY{l+m+mi}{8}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{8} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{push!}\PY{p}{(}\PY{n}{As}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{6} \PY{l+m+mi}{9}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6} \PY{l+m+mi}{4} \PY{l+m+mi}{1} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{9} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{push!}\PY{p}{(}\PY{n}{As}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{8} \PY{l+m+mi}{3} \PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{8} \PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{1}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{push!}\PY{p}{(}\PY{n}{As}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{4} \PY{l+m+mi}{6} \PY{l+m+mi}{1}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{6} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{1} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{push!}\PY{p}{(}\PY{n}{As}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{3} \PY{l+m+mi}{2} \PY{l+m+mi}{8}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{4} \PY{l+m+mi}{1} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{8} \PY{l+m+mi}{2} \PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{As}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} 5-element Array\{Any,1\}:
+         [1.0 4.0 6.0 8.0; 0.25 1.0 3.0 2.0; 0.166667 0.333333 1.0 3.0; 0.125 0.5 0.333333 1.0]   
+         [1.0 3.0 6.0 9.0; 0.333333 1.0 0.25 2.0; 0.166667 4.0 1.0 3.0; 0.111111 0.5 0.333333 1.0]
+         [1.0 8.0 3.0 2.0; 0.125 1.0 3.0 2.0; 0.333333 0.333333 1.0 1.0; 0.5 0.5 1.0 1.0]         
+         [1.0 4.0 6.0 1.0; 0.25 1.0 3.0 2.0; 0.166667 0.333333 1.0 3.0; 1.0 0.5 0.333333 1.0]     
+         [1.0 3.0 2.0 8.0; 0.333333 1.0 0.25 0.5; 0.5 0.25 1.0 3.0; 0.125 2.0 0.333333 1.0]       
+\end{Verbatim}
+        
+    Для каждой из матриц найти максимальные собственные значения (они
+потребуются для оценки однородности суждений) и главные собственные
+векторы, элементы которых равны приоритетам соответствующих элементов
+следующего уровня иерархии. Для этого воспользуемся алгоритмом
+вычисления точного значения максимального собственного числа и главного
+собственного вектора из задания 1, который оформим в виде функции.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{function}\PY{n+nf}{ }\PY{n+nf}{eigvalvecaccurate}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+            \PY{n}{a} \PY{o}{=} \PY{n}{Complex}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+            \PY{n}{b} \PY{o}{=} \PY{n}{Complex}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+            \PY{n}{c} \PY{o}{=} \PY{n}{Complex}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+            \PY{n}{d} \PY{o}{=} \PY{n}{Complex}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+            \PY{n}{e} \PY{o}{=} \PY{n}{Complex}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+            \PY{n}{f} \PY{o}{=} \PY{n}{Complex}\PY{p}{(}\PY{n}{A}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+            \PY{n}{B} \PY{o}{=} \PY{p}{(}\PY{n}{d}\PY{o}{*}\PY{n}{f}\PY{o}{/}\PY{n}{e}\PY{o}{+}\PY{n}{e}\PY{o}{/}\PY{n}{d}\PY{o}{/}\PY{n}{f}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{e}\PY{o}{/}\PY{n}{c}\PY{o}{+}\PY{n}{c}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{e}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{b}\PY{o}{*}\PY{n}{f}\PY{o}{/}\PY{n}{c}\PY{o}{+}\PY{n}{c}\PY{o}{/}\PY{n}{b}\PY{o}{/}\PY{n}{f}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{d}\PY{o}{/}\PY{n}{b}\PY{o}{+}\PY{n}{b}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{d}\PY{p}{)}
+            \PY{n}{C} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{d}\PY{o}{*}\PY{n}{f}\PY{o}{/}\PY{n}{c}\PY{o}{+}\PY{n}{c}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{d}\PY{o}{/}\PY{n}{f}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{e}\PY{o}{/}\PY{n}{b}\PY{o}{/}\PY{n}{f}\PY{o}{+}\PY{n}{b}\PY{o}{*}\PY{n}{f}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{e}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{c}\PY{o}{*}\PY{n}{d}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{e}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{c}\PY{o}{*}\PY{n}{d}\PY{o}{/}\PY{n}{b}\PY{o}{/}\PY{n}{e}\PY{o}{+}\PY{n}{b}\PY{o}{*}\PY{n}{e}\PY{o}{/}\PY{n}{c}\PY{o}{/}\PY{n}{d}\PY{p}{)}
+            \PY{n}{x} \PY{o}{=} \PY{n}{B}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{o}{/}\PY{l+m+mi}{2}\PY{o}{+}\PY{l+m+mi}{8}\PY{n}{C}\PY{o}{\PYZhy{}}\PY{l+m+mi}{8}
+            \PY{n}{y} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{(}\PY{n}{C}\PY{o}{+}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{3}
+            \PY{n}{r} \PY{o}{=} \PY{p}{(}\PY{n}{x}\PY{o}{+}\PY{n}{sqrt}\PY{p}{(}\PY{n}{y}\PY{o}{+}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{n}{sqrt}\PY{p}{(}\PY{n}{y}\PY{o}{+}\PY{n}{x}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZca{}}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{)}
+            \PY{n}{lmax} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{sqrt}\PY{p}{(}\PY{n}{r}\PY{o}{+}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{sqrt}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{8}\PY{o}{\PYZhy{}}\PY{n}{r}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{4}\PY{p}{)} \PY{o}{+} \PY{n}{B}\PY{o}{/}\PY{p}{(}\PY{l+m+mi}{2}\PY{n}{sqrt}\PY{p}{(}\PY{n}{r}\PY{o}{+}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+            \PY{n}{Q} \PY{o}{=} \PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{3} \PY{o}{+} \PY{p}{(}\PY{n}{c}\PY{o}{+}\PY{n}{f}\PY{o}{+}\PY{n}{e}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{b}\PY{o}{+}\PY{n}{d}\PY{p}{)}\PY{n}{f}\PY{o}{+}\PY{n}{c}\PY{o}{/}\PY{n}{a}\PY{o}{+}\PY{n}{c}\PY{o}{/}\PY{n}{b}\PY{o}{+}\PY{n}{e}\PY{o}{/}\PY{n}{d}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{d}\PY{o}{*}\PY{n}{f}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{o}{\PYZhy{}}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{n}{f}\PY{o}{+}\PY{p}{(}\PY{n}{b}\PY{o}{*}\PY{n}{e}\PY{o}{/}\PY{n}{d}\PY{o}{+}\PY{n}{b}\PY{o}{*}\PY{n}{f}\PY{o}{/}\PY{n}{a}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{c}\PY{o}{*}\PY{n}{d}\PY{o}{+}\PY{n}{a}\PY{o}{*}\PY{n}{e}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{o}{*}\PY{n}{d}\PY{p}{)}\PY{o}{/}\PY{n}{b}\PY{o}{+}\PY{p}{(}\PY{n}{c}\PY{o}{\PYZhy{}}\PY{n}{b}\PY{p}{)}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{d}\PY{p}{)}
+            \PY{n}{first} \PY{o}{=} \PY{n}{c}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{e}\PY{o}{+}\PY{n}{b}\PY{o}{*}\PY{n}{f}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{n}{d}\PY{o}{*}\PY{n}{f}\PY{o}{+}\PY{n}{b}\PY{o}{*}\PY{n}{e}\PY{o}{/}\PY{n}{d}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{p}{)}
+            \PY{n}{second} \PY{o}{=} \PY{n}{e}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{p}{(}\PY{n}{d}\PY{o}{*}\PY{n}{f}\PY{o}{+}\PY{n}{c}\PY{o}{/}\PY{n}{a}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{b}\PY{o}{*}\PY{n}{f}\PY{o}{/}\PY{n}{a}\PY{o}{+}\PY{n}{c}\PY{o}{*}\PY{n}{d}\PY{o}{/}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{e}\PY{p}{)}
+            \PY{n}{third} \PY{o}{=} \PY{n}{f}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{p}{(}\PY{n}{e}\PY{o}{/}\PY{n}{d}\PY{o}{+}\PY{n}{c}\PY{o}{/}\PY{n}{b}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{c}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{d}\PY{o}{+}\PY{n}{a}\PY{o}{*}\PY{n}{e}\PY{o}{/}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{f}\PY{p}{)}
+            \PY{n}{fourth} \PY{o}{=} \PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZca{}}\PY{l+m+mi}{3} \PY{o}{\PYZhy{}} \PY{l+m+mi}{3}\PY{o}{*}\PY{p}{(}\PY{n}{lmax}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{b}\PY{o}{/}\PY{n}{a}\PY{o}{/}\PY{n}{d}\PY{o}{+}\PY{n}{a}\PY{o}{*}\PY{n}{d}\PY{o}{/}\PY{n}{b}\PY{p}{)}
+            \PY{n}{accurate} \PY{o}{=} \PY{p}{[}\PY{n}{first}\PY{p}{;} \PY{n}{second}\PY{p}{;} \PY{n}{third}\PY{p}{;} \PY{n}{fourth}\PY{p}{]}
+            \PY{n}{accurate} \PY{o}{/}\PY{o}{=} \PY{n}{Q}
+            \PY{k}{return} \PY{n}{lmax}\PY{p}{,} \PY{n}{accurate}
+        \PY{k}{end}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} eigvalvecaccurate (generic function with 1 method)
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{Vals} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{Vecs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{Iss} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{Rss} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{A} \PY{k}{in} \PY{n}{As}
+             \PY{n}{maxval}\PY{p}{,} \PY{n}{mainvec} \PY{o}{=} \PY{n}{eigvalvecaccurate}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+             \PY{n}{Is} \PY{o}{=} \PY{n}{ids}\PY{p}{(}\PY{n}{maxval}\PY{p}{,} \PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+             \PY{n}{Rs} \PY{o}{=} \PY{n}{rs}\PY{p}{(}\PY{n}{Is}\PY{p}{,} \PY{n}{size}\PY{p}{(}\PY{n}{A}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+             \PY{n}{push!}\PY{p}{(}\PY{n}{Vals}\PY{p}{,} \PY{n}{real}\PY{p}{(}\PY{n}{maxval}\PY{p}{)}\PY{p}{)}
+             \PY{n}{push!}\PY{p}{(}\PY{n}{Vecs}\PY{p}{,} \PY{n}{map}\PY{p}{(}\PY{n}{real}\PY{p}{,} \PY{n}{mainvec}\PY{p}{)}\PY{p}{)}
+             \PY{n}{push!}\PY{p}{(}\PY{n}{Iss}\PY{p}{,} \PY{n}{real}\PY{p}{(}\PY{n}{Is}\PY{p}{)}\PY{p}{)}
+             \PY{n}{push!}\PY{p}{(}\PY{n}{Rss}\PY{p}{,} \PY{n}{real}\PY{p}{(}\PY{n}{Rs}\PY{p}{)}\PY{p}{)}
+         \PY{k}{end}
+\end{Verbatim}
+
+    Выполним иерархический синтез.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{W} \PY{o}{=} \PY{n}{Vecs}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{vec}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} 1?1 Array\{Any,2\}:
+          [0.530109 0.152196 0.153613 0.164082]
+\end{Verbatim}
+        
+    Таким образом, видно, что в системе предпочтений индивидуума наибольший
+приоритет имеет провайдер 1 (``Связьинформ'').
+
+    \subsection{Задание 6}\label{ux437ux430ux434ux430ux43dux438ux435-6}
+
+    \subsubsection{Постановка
+задачи}\label{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438}
+
+    Оценить отношение согласованности иерархии из задания 5.
+
+    \subsubsection{Ход
+решения}\label{ux445ux43eux434-ux440ux435ux448ux435ux43dux438ux44f}
+
+    Завершается алгоритм анализом однородности построенной иерархии. Для
+этого вычислим индекс однородности и отношение однородности в
+соответствии с третьим шагом алгоритма.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{I} \PY{o}{=} \PY{n}{real}\PY{p}{(}\PY{n}{Is} \PY{o}{+} \PY{n}{vec}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{Iss}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} 1-element Array\{Float64,1\}:
+          1.05641
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{Ihat} \PY{o}{=} \PY{n}{real}\PY{p}{(}\PY{n}{Rs} \PY{o}{+} \PY{n}{vec}\PY{o}{\PYZsq{}} \PY{o}{*} \PY{n}{Rss}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} 1-element Array\{Float64,1\}:
+          1.17379
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{Rs} \PY{o}{=} \PY{n}{I} \PY{o}{/} \PY{n}{Ihat}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} 1?1 Array\{Float64,2\}:
+          0.9
+\end{Verbatim}
+        
+    Однородность иерархии принято считать удовлетворительной при
+$R_s\leq 0.1$. Неудовлетворительную однородность построенной иерархии
+можно объяснить тем, что на шаге 1 были построены несогласованные
+матрицы.
+
+
     % Add a bibliography block to the postdoc
     
-    
+\input{hierarchy}
     
     \end{document}

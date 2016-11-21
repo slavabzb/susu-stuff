@@ -32,10 +32,10 @@ Mode=LaTeX
 
 [item:main.tex]
 archive=true
-column=12
+column=17
 encoding=windows-1251
 highlight=LaTeX
-line=276
+line=885
 mode=LaTeX
 open=true
 order=0
@@ -61,10 +61,10 @@ open=false
 order=-1
 
 [view-settings,view=0,item:main.tex]
-CursorColumn=12
-CursorLine=276
+CursorColumn=17
+CursorLine=885
 JumpList=
-ViMarks=.,276,4,[,276,4,],276,11
+ViMarks=.,885,15,[,885,7,],885,15
 
 [view-settings,view=0,item:title.tex]
 CursorColumn=0

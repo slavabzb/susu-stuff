@@ -4,4 +4,5 @@
 *.backup
 *.toc
 *.ipynb_checkpoints
+*.synctex.gz
 
