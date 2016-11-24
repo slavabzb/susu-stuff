@@ -1,0 +1,66 @@
+\newcommand{\SusuHeader}{% \usepackage{setspace}
+\begin{center}
+\begin{spacing}{0.9}
+Министерство образования и науки Российской Федерации \\
+{\small Федеральное государственное бюджетное образовательное учреждение высшего профессионального образования} \\
+<<Южно-Уральский государственный университет>> \\
+{\small (Национальный исследовательский университет)} \\
+Факультет вычислительной математики и информатики \\
+Кафедра экономико-математических методов и статистики
+\end{spacing}
+\end{center}
+}
+
+\newcommand{\SignField}{
+\underline{~~~~~~~~~~~~~~~~~~~}
+}
+
+\newcommand{\DateField}{
+\underline{<<~~~~>>~~~~~~~~~~~~~}\the\year~г.
+}
+
+\newcommand{\Author}{В.А.~Безбородов}
+\newcommand{\Group}{ВМИ-113}
+\newcommand{\Theme}{Практические занятия по дискретной математике}
+\newcommand{\Course}{Отчет по педагогической практике}
+%Магистерская программа 010400.68.01 «Математическое и информационное обеспечение экономической деятельности»
+% Студень № 115-049
+\newcommand{\PaperCode}{ЮУрГУ-010400.68.2017.049.001 КР}
+\newcommand{\Reviewer}{Эвнин~А.Ю.}
+\newcommand{\HeadOfDepartment}{Панюков~А.В.}
+\newcommand{\Supervisor}{В.И.~Дударева}
+\newcommand{\Norm}{Т.А.~Макаровских}
+
+\makeatletter
+\newcounter{append}
+\renewcommand{\theappend}{\Asbuk{append}\,}
+\newcommand{\append}[1]{\newpage\refstepcounter{append}\par\vspace{1.5cm plus 1cm minus .5cm}
+	\par\centerline{\bfseries ПРИЛОЖЕНИЕ~\theappend}
+    \bigskip
+    \par\centerline{\MakeTextUppercase{#1}}
+	\addcontentsline{toc}{section}{ПРИЛОЖЕНИЕ~\theappend. #1}\markboth{\theappend #1}{\theappend #1}
+	\nopagebreak\bigskip\par
+	\setcounter{lstlisting}{0}}
+\makeatother
+
+\renewcommand{\appendix}{
+\renewcommand{\thelstlisting}{\theappend.\arabic{lstlisting}}
+\newpage
+\pagestyle{empty}
+\topskip0pt
+\vspace*{\fill}
+\par\centerline{\bfseries ПРИЛОЖЕНИЯ~\theappend}
+\vspace*{\fill}
+\newpage
+\pagestyle{plain}
+}
+
+\makeatletter
+\def\@biblabel#1{#1. }
+
+\linespread{1.3}
+\extrarowheight=2pt
+\allowdisplaybreaks[4]
+
+\clubpenalty=10000
+\widowpenalty=10000

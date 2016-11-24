@@ -5,4 +5,8 @@
 *.toc
 *.ipynb_checkpoints
 *.synctex.gz
+*.bak
+*.bbl
+*.thm
+*.blg
 
