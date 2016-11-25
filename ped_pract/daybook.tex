@@ -126,3 +126,55 @@
 
 \textbf{Решение.} $$\sum_{k=0}^nk\cdot C_n^k=0\cdot C_n^0+\sum_{k=1}^nk\cdot C_n^k=$$ $$=\left[k\cdot C_n^k=n\cdot C_{n+1}^{k-1}\right]=\sum_{k=1}^nn\cdot C_{n-1}^{k-1}=$$ $$=n\sum_{k=1}^nC_{n-1}^{k-1}=\left[t=k-1\right]=$$ $$=n\sum_{t=0}^{n-1}C_{n-1}^t=\left[\sum_{k=0}^nC_n^k=2^n\right]=n\cdot 2^{n-1}.$$ Что и требовалось доказать.
 
+\subsection*{Занятие 5}
+
+Формирование перестановок и сочетаний.
+
+\subsubsection*{Самостоятельная работа}
+
+Вариант 1.
+\begin{enumerate}
+\item Доказать, что $$\sum_{k=0}^n(-1)^k\frac{C_n^k}{k+1}=\frac{1}{n+1}.$$
+\end{enumerate}
+
+Вариант 2.
+\begin{enumerate}
+\item Доказать, что $$\sum_{i=0}^kC_{n+i-1}^i=C_{n+k}^k.$$
+\end{enumerate}
+
+\subsubsection*{Примеры задач}
+
+\textbf{Задача.} Определить перестановку, следующую за $21435$.
+
+\textbf{Решение.} Согласно алгоритму ПЕРЕСТАНОВКА имеем:
+
+$$
+\begin{array}{cccccccc}
+ &  & 1 & 2 & 3 & \fbox{4} & 5 &  \\
+P & ( & 2 & 1 & 4 & \underline{3} & 5 & )
+\end{array}
+$$
+
+\begin{enumerate}
+\item $m=4$
+\item $a_i=5$
+\item $214\fbox{5}3$
+\item $21453$
+\end{enumerate}
+
+Следующая перестановка $21453$.
+
+\bigskip
+
+\textbf{Задача.} Дано множество $S=\{1,2,3,4,5\}$. Определить сочетание, следующее за $S_1=\{1,3,4\}$.
+
+\textbf{Решение.} Согласно алгоритму СОЧЕТАНИЕ имеем:
+
+\begin{enumerate}
+\item $S=\{1,2,3,4,5\}$, $S_1=\{1,3,4\}$
+\item $10110$
+\item $10111$
+\item $S_2=\{1,3,4,5\}$
+\end{enumerate}
+
+Следующее сочетание $\{1,3,4,5\}$.
