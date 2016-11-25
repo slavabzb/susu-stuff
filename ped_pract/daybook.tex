@@ -93,3 +93,36 @@
 \textbf{Задача.} Найти коэффициент при $x^ky^m$ в разложении $(1+x+y)^n$, $k+m\leq n$.
 
 \textbf{Решение.} Используя полиномиальную формулу, имеем $$(1+x+y)^n=\sum_{n_1+n_2+n_3=n}\frac{n!}{n_1!n_2!n_3!}x^{n_2}y^{n_3},$$ $$n_2=k,\mbox{ }n_3=m,\mbox{ }\frac{n!}{k!m!(n-k-m)!}.$$
+
+\subsection*{Занятие 4}
+
+Комбинаторные тождества.
+
+\subsubsection*{Самостоятельная работа}
+
+Вариант 1.
+\begin{enumerate}
+\item Формула числа сочетаний без повторений.
+\item Полиномиальная формула.
+\item В разложении $(3x-4y)^{13}$, найти коэффициент при множителе $x^8y^5$.
+\end{enumerate}
+
+Вариант 2.
+\begin{enumerate}
+\item Формула числа перестановок с повторениями.
+\item Формула бинома Ньютона.
+\item В разложении $(2x+3y)^{10}$, найти коэффициент при множителе $x^6y^4$.
+\end{enumerate}
+
+\subsubsection*{Примеры задач}
+
+\textbf{Задача.} Доказать равенство $$\sum_{k=0}^{n}\frac{1}{k+1}C_n^k=\frac{2^{n+1}-1}{n+1}.$$
+
+\textbf{Решение.} $$\sum_{k=0}^n\frac{1}{k+1}C_n^k=\left[k\cdot C_n^k=n\cdot C_{n+1}^{k-1}\right]=$$ $$=\sum_{k=0}^n\frac{1}{n+1}C_{n+1}^{k+1}=\frac{1}{n+1}\sum_{k=0}^nC_{n+1}^{k+1}=$$ $$=\left[\sum_{k=0}^nC_n^k=2^n\right]=\frac{1}{n+1}\left(2^{n+1}-1\right).$$ Что и требовалось доказать.
+
+\bigskip
+
+\textbf{Задача.} Доказать равенство $$\sum_{k=0}^{n}k\cdot C_n^k=n\cdot 2^{n-1}.$$
+
+\textbf{Решение.} $$\sum_{k=0}^nk\cdot C_n^k=0\cdot C_n^0+\sum_{k=1}^nk\cdot C_n^k=$$ $$=\left[k\cdot C_n^k=n\cdot C_{n+1}^{k-1}\right]=\sum_{k=1}^nn\cdot C_{n-1}^{k-1}=$$ $$=n\sum_{k=1}^nC_{n-1}^{k-1}=\left[t=k-1\right]=$$ $$=n\sum_{t=0}^{n-1}C_{n-1}^t=\left[\sum_{k=0}^nC_n^k=2^n\right]=n\cdot 2^{n-1}.$$ Что и требовалось доказать.
+
