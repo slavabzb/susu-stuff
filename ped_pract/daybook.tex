@@ -291,7 +291,8 @@ $$
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{i/i0.png} 
+\includegraphics[scale=0.5]{i/i0.png}
+\caption{Бинарное дерево.}
 \end{figure}
 
 \textbf{Решение.} 1) 4; 2) 2; 3) 1; 4) 4; 5) $e$; 6) $c,d,e$.
@@ -349,7 +350,8 @@ $$
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{i/i1.png} 
+\includegraphics[scale=0.5]{i/i1.png}
+\caption{Граф для нахождения минимального остовного дерева.}
 \end{figure}
 
 Вариант 1.
@@ -484,6 +486,7 @@ $$
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=1]{i/i2.png} 
+\caption{Граф для решения задачи единого среднего.}
 \end{figure}
 
 Масса грузов, которые необходимо привезти, указана в таблице.
@@ -525,7 +528,8 @@ $$
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=1]{i/i3.png} 
+\includegraphics[scale=0.8]{i/i3.png} 
+\caption{Граф для нахождения кратчайшего пути.}
 \end{figure}
 
 \subsubsection*{Примеры задач}
@@ -564,11 +568,12 @@ $L(v_i)$  & 0  & 2  & 3 & 6 & 9 & 10 & 12 \\ \hline
 
 Таким образом, минимальное время, за которое может быть выполнен проект, равно 12 дням. Критический путь проходит по этапам $B,D,E,F,H$. То есть, работы $A,C,G$ не лежат на критическом пути.
 
-Построим сетевой график, соответствующий условию задачи.
+Построим сетевой график, соответствующий условию задачи (рисунок~\ref{fig:net}).
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=1]{i/i4.png} 
+\includegraphics[scale=0.8]{i/i4.png} 
+\caption{Сетевой график.\label{fig:net}}
 \end{figure}
 
 Рассмотрим эти работы и определим, нельзя ли выполнить их в стандартные сроки без увеличения общего времени выполнения проекта. Выполнение этих работ в стандартное время дает следующую экономию: $A$ -- 800 т.р., $C$ -- 500 т.р., $G$ -- 1800 т.р.
@@ -587,35 +592,40 @@ $L(v_i)$  & 0  & 2  & 3 & 6 & 9 & 10 & 12 \\ \hline
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{i/i5.png} 
+\includegraphics[scale=0.4]{i/i5.png} 
+\caption{Граф для нахождения максимального потока в сети.}
 \end{figure}
 
 \textbf{Решение.} Согласно алгоритму Форда-Фалкерсона, построим начальный поток в сети. Для примера, это может быть поток $1\rightarrow 2\rightarrow 5\rightarrow 6$. Максимальная пропускная способность сети на этом участке определяется участком $2\rightarrow 5$ и ограничивается 3 единицами траффика. Построив такой поток мы тем самым полностью загрузим участок $2\rightarrow 5$. Отразим это на рисунке путем введения обратного потока указанного объема. Пропускная способность исходных каналов, естественно, сократится.
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{i/i6.png} 
+\includegraphics[scale=0.4]{i/i6.png} 
+\caption{Начальный поток.}
 \end{figure}
 
-Следующий поток $1\rightarrow 3\rightarrow 4\rightarrow 6$ величиной 2.
+Следующий поток $1\rightarrow 3\rightarrow 4\rightarrow 6$ величиной 2 (рисунок~\ref{fig:stream2}).
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{i/i7.png} 
+\includegraphics[scale=0.4]{i/i7.png} 
+\caption{Поток 2.\label{fig:stream2}}
 \end{figure}
 
-Следующий поток $1\rightarrow 2\rightarrow 4\rightarrow 5\rightarrow 6$ величиной 7.
+Следующий поток $1\rightarrow 2\rightarrow 4\rightarrow 5\rightarrow 6$ величиной 7 (рисунок~\ref{fig:stream3}).
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{i/i8.png} 
+\includegraphics[scale=0.4]{i/i8.png} 
+\caption{Поток 3.\label{fig:stream3}}
 \end{figure}
 
-Следующий поток $1\rightarrow 3\rightarrow 5\rightarrow 6$ величиной 1.
+Следующий поток $1\rightarrow 3\rightarrow 5\rightarrow 6$ величиной 1 (рисунок~\ref{fig:maxstream}).
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{i/i9.png} 
+\includegraphics[scale=0.4]{i/i9.png} 
+\caption{Максимальный поток.\label{fig:maxstream}}
 \end{figure}
 
 После выполнения этого шага не существует возможности пустить в сети еще поток ненулевого траффика. Таким образом, величина максимального потока известна и равна $3+2+7+1=13$.
