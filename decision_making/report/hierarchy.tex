@@ -16,19 +16,35 @@
 
 Конечный результат определяется различными социальными группами (акторами) и целями, которые преследуют акторы.
 
-\begin{table}[]
+%A1 = [
+%	1 1 1/5;
+%	1 1 1/5;
+%	5 5 1
+%]
+%
+%A2 = [
+%	1 1/3 5;
+%	3 1 5;
+%	1/5 1/5 1
+%]
+%
+%A3 = [
+%	1 1/5 1/3;
+%	5 1 1/3;
+%	3 3 1
+%]
+
+\begin{table}[h!]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\begin{tabular}[c]{@{}c@{}}Какой из акторов обладает наибольшим\\ влиянием на разработку системы?\end{tabular}}                                                                                                                                                                      \\ \hline
 \begin{tabular}[c]{@{}c@{}}Решение о\\ разработке\end{tabular} & \begin{tabular}[c]{@{}c@{}}Испол-\\ нитель\end{tabular} & \begin{tabular}[c]{@{}c@{}}Заказ-\\ чик\end{tabular} & \begin{tabular}[c]{@{}c@{}}Пользо-\\ ватель\end{tabular} & \begin{tabular}[c]{@{}c@{}}Собственный\\ вектор\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}c@{}}Испол-\\ нитель\end{tabular}        & 1                                                       & 0.41                                                 & 0.70                                                     &                                                              \\ \hline
-\begin{tabular}[c]{@{}c@{}}Заказ-\\ чик\end{tabular}           & 2.47                                                    & 1                                                    & 0.70                                                     &                                                              \\ \hline
-\begin{tabular}[c]{@{}c@{}}Пользо-\\ ватель\end{tabular}       & 1.45                                                    & 1.45                                                 & 1                                                        &                                                              \\ \hline
-                                                               &                                                         &                                                      & $\lambda_{max}$                                          &                                                              \\ \hline
-                                                               &                                                         &                                                      & $R_s$                                                    &                                                              \\ \hline
-\multicolumn{5}{|c|}{Наибольшее влияние на разработку системы имеют}                                                                                                                                                                                                                                      \\ \hline
+\begin{tabular}[c]{@{}c@{}}Испол-\\ нитель\end{tabular}        & 1                                                       & 0.41                                                 & 0.70                                                     & 0.2103                                                       \\ \hline
+\begin{tabular}[c]{@{}c@{}}Заказ-\\ чик\end{tabular}           & 2.47                                                    & 1                                                    & 0.70                                                     & \textbf{0.3813}                                              \\ \hline
+\begin{tabular}[c]{@{}c@{}}Пользо-\\ ватель\end{tabular}       & 1.45                                                    & 1.45                                                 & 1                                                        & \textbf{0.4086}                                              \\ \hline
+                                                               &                                                         &                                                      & $\lambda_{max}$                                          & 3.11                                                         \\ \hline
+                                                               &                                                         &                                                      & $R_s$                                                    & 0.095                                                        \\ \hline
+\multicolumn{5}{|c|}{\begin{tabular}[c]{@{}c@{}}Наибольшее влияние на разработку системы имеют\\ заказчик и пользователь\end{tabular}}                                                                                                                                                                    \\ \hline
 \end{tabular}
 \end{table}
-
-

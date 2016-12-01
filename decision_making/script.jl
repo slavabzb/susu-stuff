@@ -69,22 +69,16 @@ A = map((a1, a2, a3) -> ceil(geomean([a1, a2, a3]) * 100) / 100, A1, A2, A3)
 
 println(A)
 
-M = [
-	1 5 1/5 1/7 1/9;
-	1/5 1 1/7 1/9 1/9;
-	5 7 1 1/4 1/7;
-	7 9 4 1 1;
-	9 9 7 1 1
-]
+val, vec = eigvalvecapprox(A)
 
-val, vec = eigvalvecapprox(M)
+val = ceil(val * 1e2) / 1e2
+vec = [ceil(x * 1e4) / 1e4 for x in vec]
 
 println("vec ", vec)
 println("val ", val)
 
 Is = ids(val, size(A)[1])
-Rs = rs(Is, size(A)[1])
+Rs = ceil(rs(Is, size(A)[1]) * 1e3) / 1e3
 
-println("Is ", Is)
 println("Rs ", Rs)
 
