@@ -74,14 +74,10 @@ println(A)
 
 val, vec = eigvalvecapprox(A)
 
-val = ceil(val * 1e2) / 1e2
-vec = [ceil(x * 1e4) / 1e4 for x in vec]
-
-println("vec ", vec)
-println("val ", val)
-
 Is = ids(val, size(A)[1])
 Rs = ceil(rs(Is, size(A)[1]) * 1e3) / 1e3
 
+println("vec ", [ceil(x * 1e4) / 1e4 for x in vec])
+println("val ", ceil(val * 1e2) / 1e2)
 println("Rs ", Rs)
 
