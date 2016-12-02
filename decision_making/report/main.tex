@@ -68,7 +68,29 @@
     \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
                                 % normalem makes italics be italics, not underlines
     
+    \usepackage{textcase}
 
+\makeatletter
+\newcounter{append}
+\renewcommand{\theappend}{\Asbuk{append}\,}
+\newcommand{\append}[1]{\newpage\refstepcounter{append}\par\vspace{1.5cm plus 1cm minus .5cm}
+	\par\centerline{\bfseries ПРИЛОЖЕНИЕ~\theappend}
+    \bigskip
+    \par\centerline{\MakeTextUppercase{#1}}
+	\addcontentsline{toc}{section}{ПРИЛОЖЕНИЕ~\theappend. #1}\markboth{\theappend #1}{\theappend #1}
+	\nopagebreak\bigskip\par}
+\makeatother
+
+\renewcommand{\appendix}{
+\newpage
+\pagestyle{empty}
+\topskip0pt
+\vspace*{\fill}
+\par\centerline{\bfseries ПРИЛОЖЕНИЯ~\theappend}
+\vspace*{\fill}
+\newpage
+\pagestyle{plain}
+}
     
     
     % Colors for the hyperref package
@@ -1173,9 +1195,22 @@ $R_s\leq 0.1$. Неудовлетворительную однородность построенной иерархии
 можно объяснить тем, что на шаге 1 были построены несогласованные
 матрицы.
 
-
-    % Add a bibliography block to the postdoc
-    
 \input{hierarchy}
-    
+
+\input{Appendices}
+
+\newpage\clearpage
+
+\begin{thebibliography}{4}
+
+\bibitem{saaty80} Saaty T.L. The analytic Hierarchy Procese. - Me. Grew НШ, 1980-287 p.
+
+\bibitem{saaty87} Saaty T.L. Decision making, new information, ranking and structure. "Math. Modell", 1987, N8, 125-132p.
+
+\bibitem{andrey} Андрейчнков А.В., Зенкик С.Ю., Андрейчнкова О.Н. Обоснование выбора технических решении на начальных стадиях проектирования. // Известия вузов. Машиностроение. - 1989. - NT.- С. 102-108.
+
+\bibitem{petro} Петрухин А.В., Ветютнев СМ. Инвариантный графичес кий интерфейс для работы с моделями в виде графов / Тезисы докл. научно-технической конференции 'Разработка н внедрение САПР и АСТПП в машиностроении". - Ижевск.-1990.-С. 40-41.
+
+\end{thebibliography}
+
     \end{document}
