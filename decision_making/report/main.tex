@@ -69,6 +69,16 @@
                                 % normalem makes italics be italics, not underlines
     
     \usepackage{textcase}
+    
+    \usepackage{totcount}
+\regtotcounter{section}
+\regtotcounter{page}
+\regtotcounter{figure}
+\regtotcounter{table}
+\regtotcounter{append}
+\newtotcounter{bibitem}
+\def\oldbibitem{} \let\oldbibitem=\bibitem
+\def\bibitem{\stepcounter{bibitem}\oldbibitem}
 
 \makeatletter
 \newcounter{append}
@@ -299,6 +309,7 @@
     \newpage
     \tableofcontents
     \newpage
+    \include{intro}
 
     
     \section{Задания для самостоятельной
