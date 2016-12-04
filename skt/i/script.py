@@ -58,8 +58,8 @@ def get_negative_money_flow_total(data, t, n):
     return total
 
 def get_money_ratio(data, t, n):
-    return get_positive_money_flow_total(data, t, n) / get_negative_money_flow_total(data, t, n)
-
+    return get_positive_money_flow_total(data, t, n) /
+        get_negative_money_flow_total(data, t, n)
 def get_mfi(data, t, n):
     return 100 - 100 / (1 + get_money_ratio(data, t, n))
 
@@ -73,7 +73,7 @@ def get_mfi_strategy(data):
 def process_data(data, year):
     logging.info('processing data; year: {0}'.format(year))
     res = {'open': 0, 'close': 0, 'high': 0, 'low': 0}
-    typicalPrice = []
+    
     for row in data:
         if row['date'].tm_year == year:
             res['open'] += row['open']
@@ -140,8 +140,11 @@ if __name__ == '__main__':
             from urllib2 import quote
             start = date(args.year, 1, 1)
             end = date(args.year, 12, 31)
-            uri = 'http://www.google.com/finance/historical?q={0}&startdate={1}&enddate={2}&output=csv'
-            uri = uri.format(args.symbol.upper(), quote(start.strftime('%b %d, %Y')), quote(end.strftime('%b %d, %Y')))
+            uri = 'http://www.google.com/finance/historical?' +
+                'q={0}&startdate={1}&enddate={2}&output=csv'
+            uri = uri.format(args.symbol.upper(),
+                quote(start.strftime('%b %d, %Y')),
+                quote(end.strftime('%b %d, %Y')))
             dateFormat = '%d-%b-%y'
         
         if uri:
