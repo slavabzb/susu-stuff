@@ -1,0 +1,25 @@
+\subsection{Обратный сиплекс-метод}
+\label{simplex_revised}
+
+Вычислительные этапы обратного симплекс-метода представлены в таблице~\ref{tb:revised}.
+
+\begin{table}[]
+\centering
+\begin{tabularx}{\linewidth}{lX}
+\texttt{CHUZC}:                  & Выбрать из~$\hat{c}_N$ хорошего кандидата~$q$ для ввода в базис.                                                \\
+\texttt{FTRAN}:                  & Сформировать колонку поворота~$\hat{a}_q=B^{-1}a_q$, где~$a_q$ -- колонка~$q$ матрицы~$A$.       \\
+\texttt{CHUZR}:                  & Из отношений~$\hat{b}_i/\hat{a}_{iq}$ определить номер~$p$ строки хорошего кандидата для вывода из базиса. \\
+                                 & Положить~$\alpha=\hat{b}_p/\hat{a}_{pq}$.                                                                       \\
+                                 & Обновить~$\hat{b}:=\hat{b}-\alpha\hat{a}_q$.                                                                    \\
+\texttt{BTRAN}:                  & Сформировать~$\pi^T_p=e^T_pB^{-1}$.                                                                             \\
+\texttt{PRICE}:                  & Сформировать строку поворота~$\hat{a}^T_p=\pi^T_pN$.                                                            \\
+                                 & Обновить альтернативные издержки~$\hat{c}^T_N:=\hat{c}^T_N-\hat{c}_q\hat{\alpha}^T_p$.                          \\
+\multicolumn{2}{l}{\texttt{Если} \{рост в представлении~$B^{-1}$\}, \texttt{тогда}}                                                                                    \\
+\multicolumn{2}{l}{\hspace*{1cm}\texttt{INVERT}: Сформировать новое представление~$B^{-1}$.}                                                     \\
+\multicolumn{2}{l}{\texttt{иначе}}                                                                                                                                 \\
+\multicolumn{2}{l}{\hspace*{1cm}\texttt{UPDATE}: Обновить представление~$B^{-1}$ в соответствии с изменением базиса.}                            \\
+\multicolumn{2}{l}{\texttt{конец если}}                                                                                                                           
+\end{tabularx}
+\caption{Итерация обратного симплекс-метода}
+\label{tb:revised}
+\end{table}
