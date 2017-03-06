@@ -161,7 +161,8 @@ function optimize!(m::DrsMathProgModel)
     @debug("basis $(m.basis)")
     @debug("nonbasis $(m.nonbasis)")
 
-    B = m.A[:,m.basis]
+    invB = SharedArray(typeof(B[1]), size(B),
+        init = S -> S[linearindices(B)] = inv(B)[linearindices(B)])
     @debug("B $B")
 
     N = m.A[:,m.nonbasis]
@@ -182,12 +183,8 @@ function optimize!(m::DrsMathProgModel)
         @sync begin
             for p in P
                 pi = @spawn BTRAN(invB, p)
-                pi = fetch(pi)
-                @debug("pi $pi")
-                pivotal_row = @spawn PRICE(N, pi)
-                pivotal_row = fetch(pivotal_row)
-                @debug("pivotal_row $pivotal_row")
-                push!(pivotal_rows, pivotal_row)
+                pivotal_row = @spawn PRICE(N, fetch(pi))
+                push!(pivotal_rows, fetch(pivotal_row))
             end
         end
 
@@ -215,28 +212,6 @@ function optimize!(m::DrsMathProgModel)
 
         terminate = true
     end
-
-
-    # invB = SharedArray(typeof(B[1]), size(B),
-    #     init = S -> S[linearindices(B)] = inv(B)[linearindices(B)])
-
-
-    # pivotal_rows = []
-    #
-    # @sync begin
-    #     for p in P
-    #         pi = @spawn BTRAN(invB, p)
-    #         pivotal_row = @spawn PRICE(N, fetch(pi))
-    #         push!(pivotal_rows, fetch(pivotal_row))
-    #     end
-    # end
-    #
-    # @debug("pivotal_rows $pivotal_rows")
-    #
-    # while !isempty(pivotal_rows)
-    #     t = pop!(pivotal_rows)
-    #     @debug("took $t")
-    # end
 end
 
 function status(m::DrsMathProgModel)
